@@ -1,0 +1,46 @@
+using System.Collections;
+using System.Collections.Generic;
+using HorrorGame.Items;
+using HorrorGame.Main;
+using UnityEngine;
+
+namespace HorrorGame.Items
+{
+    public class DropForMoon : MonoBehaviour, IInteractable
+    {
+        [SerializeField] private MoonItem moonItem;
+        [SerializeField] private GameObject puzzleTwo;
+
+        private GameObject moon;
+
+        public void Interact()
+        {
+            if (GameService.Instance.playerService.GetPlayerItemList().Contains(moonItem))
+            {
+                moon = moonItem.gameObject;
+                moon.SetActive(true);
+                SendToDrop();
+                EventService.Instance.OnRemoveItem.InvokeEvent(moonItem);
+                ChangeMaterialEmission();
+                EventService.Instance.SetNextTask.InvokeEvent(puzzleTwo);
+            }
+        }
+
+        private void SendToDrop()
+        {
+            moon.transform.SetParent(transform, true);
+            moon.transform.localPosition = Vector3.zero;
+            moon.transform.localPosition = Vector3.zero;
+        }
+
+        private void ChangeMaterialEmission()
+        {
+            Material mat = moon.gameObject.GetComponent<Renderer>().material;
+            Color baseColor = Color.yellow;
+            Color finalColor = baseColor * Mathf.LinearToGammaSpace(50);
+            mat.SetColor("_EmissionColor", finalColor);
+        }
+    }
+}
+
+

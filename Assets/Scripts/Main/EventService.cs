@@ -22,10 +22,18 @@ namespace HorrorGame.Main
         }
 
         public EventController<IInteractable> OnRemoveItem { get; private set; }
+        public EventController<string> SetSuggestionText { get; private set; }
+        public EventController<string> SetNotesText { get; private set; }
+        public EventController<GameObject> SetNextTask { get; private set; }
+        public EventController OpenNotesText { get; private set; }
 
         public EventService()
         {
             OnRemoveItem = new EventController<IInteractable>();
+            SetNotesText = new EventController<string>();
+            SetSuggestionText = new EventController<string>();
+            SetNextTask = new EventController<GameObject>();
+            OpenNotesText = new EventController();
         }
 
     }

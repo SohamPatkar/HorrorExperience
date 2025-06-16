@@ -13,6 +13,8 @@ namespace HorrorGame.Player
         [SerializeField] private Camera camera;
         [SerializeField] private PlayerScriptableObject playerScriptableObject;
 
+        private IInteractable interactable;
+
         private PlayerController playerController;
 
         void Start()
@@ -20,7 +22,6 @@ namespace HorrorGame.Player
             EventService.Instance.OnRemoveItem.AddListener(playerController.RemoveListItem);
         }
 
-        // Update is called once per frame
         void Update()
         {
             playerController.CameraMovement();
@@ -49,10 +50,16 @@ namespace HorrorGame.Player
             return transform;
         }
 
+        void OnTriggerEnter(Collider other)
+        {
+            if (other.TryGetComponent(out interactable))
+            {
+                EventService.Instance.SetSuggestionText.InvokeEvent("Interact! press E");
+            }
+        }
+
         void OnTriggerStay(Collider other)
         {
-            IInteractable interactable;
-
             if (other.TryGetComponent(out interactable) && playerController.IsInteracted)
             {
                 interactable.Interact();

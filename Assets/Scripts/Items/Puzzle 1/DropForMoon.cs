@@ -20,8 +20,9 @@ namespace HorrorGame.Items
                 moon = moonItem.gameObject;
                 moon.SetActive(true);
                 SendToDrop();
-                EventService.Instance.OnRemoveItem.InvokeEvent(moonItem);
                 ChangeMaterialEmission();
+
+                EventService.Instance.OnRemoveItem.InvokeEvent(moonItem);
                 EventService.Instance.SetNextTask.InvokeEvent(puzzleTwo);
             }
         }

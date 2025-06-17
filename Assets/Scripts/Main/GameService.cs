@@ -20,15 +20,16 @@ namespace HorrorGame.Main
         void Start()
         {
             playerService = new PlayerService(playerView, playerSpawnPosition);
+
             EventService.Instance.SetSuggestionText.InvokeEvent("Look for Notes");
             EventService.Instance.SetNextTask.AddListener(StartPuzzle);
         }
 
         private void StartPuzzle(GameObject puzzle)
         {
-            foreach (var puzzleItem in puzzles)
+            foreach (GameObject puzzleItem in puzzles)
             {
-                if (puzzleItem == puzzle)
+                if (puzzleItem.name == puzzle.name)
                 {
                     puzzle.SetActive(true);
                 }

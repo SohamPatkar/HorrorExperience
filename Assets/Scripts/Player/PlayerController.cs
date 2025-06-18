@@ -24,7 +24,8 @@ namespace HorrorGame.Player
         public PlayerController(PlayerScriptableObject playerScriptableObject, PlayerView playerView, Vector3 spawnPos)
         {
             this.playerScriptableObject = playerScriptableObject;
-            this.playerView = Object.Instantiate(playerView.gameObject, spawnPos, quaternion.identity).GetComponent<PlayerView>();
+            this.playerView = Object.Instantiate(playerView.gameObject).GetComponent<PlayerView>();
+            this.playerView.gameObject.transform.position = spawnPos;
 
             Initialize();
         }
@@ -84,6 +85,10 @@ namespace HorrorGame.Player
             if (Input.GetKeyDown(KeyCode.E))
             {
                 IsInteracted = true;
+            }
+            else
+            {
+                IsInteracted = false;
             }
         }
 

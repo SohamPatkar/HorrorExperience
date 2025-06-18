@@ -27,6 +27,9 @@ namespace HorrorGame.Main
         public EventController<GameObject> SetNextTask { get; private set; }
         public EventController OpenNotesText { get; private set; }
         public EventController AddPuzzleCounter { get; private set; }
+        public EventController DimLights { get; private set; }
+        public EventController OnStartGame { get; private set; }
+        public EventController ShowMainMenu { get; private set; }
 
         public EventService()
         {
@@ -36,6 +39,9 @@ namespace HorrorGame.Main
             SetNextTask = new EventController<GameObject>();
             OpenNotesText = new EventController();
             AddPuzzleCounter = new EventController();
+            DimLights = new EventController();
+            OnStartGame = new EventController();
+            ShowMainMenu = new EventController();
         }
 
     }

@@ -53,6 +53,7 @@ namespace HorrorGame.UI
         private void OpenNotes()
         {
             notesObject.SetActive(true);
+            suggestionsObject.SetActive(false);
             DisableInteractionUI();
             EventService.Instance.SetUIOpen.InvokeEvent(true);
         }
@@ -89,7 +90,7 @@ namespace HorrorGame.UI
 
         private IEnumerator HideText(GameObject gameObject)
         {
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(1.5f);
             gameObject.SetActive(false);
         }
 

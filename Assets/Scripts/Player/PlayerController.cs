@@ -32,8 +32,8 @@ namespace HorrorGame.Player
 
         private void Initialize()
         {
-            mouseXSens = 250f;
-            mouseYSens = 250f;
+            mouseXSens = 150;
+            mouseYSens = 150;
             playerView.SetController(this);
             playerCam = playerView.GetCamera();
             playerTransform = playerView.GetPlayerTransform();

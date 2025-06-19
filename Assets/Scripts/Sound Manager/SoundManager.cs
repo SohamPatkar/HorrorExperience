@@ -6,7 +6,8 @@ namespace HorrorGame.Sounds
     public enum SoundType
     {
         BackgroundMusic,
-        Changed
+        Changed,
+        EndMusic
     }
 
     [Serializable]

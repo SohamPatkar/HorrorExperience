@@ -1,6 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using HorrorGame.Items;
+using HorrorGame.Main;
+using HorrorGame.Sounds;
 using UnityEngine;
 
 namespace HorrorGame.Mother
@@ -25,8 +25,17 @@ namespace HorrorGame.Mother
             else if (note != null)
             {
                 note.SetActive(true);
+                DeactivateGameobjects();
+                EventService.Instance.OnLastPuzzle.InvokeEvent();
+                SoundManager.Instance.PlayBackgroundMusic(SoundType.EndMusic);
+                SoundManager.Instance.PlaySfx(SoundType.Changed);
+                Destroy(gameObject, timer);
             }
+        }
 
+        private void DeactivateGameobjects()
+        {
+            EventService.Instance.DeactivateGameObjects.InvokeEvent();
         }
     }
 }

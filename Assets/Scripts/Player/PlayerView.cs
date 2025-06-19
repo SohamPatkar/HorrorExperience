@@ -23,9 +23,16 @@ namespace HorrorGame.Player
             camera = GameObject.Find("Camera").GetComponent<Camera>();
         }
 
+        void OnDisable()
+        {
+            EventService.Instance.OnRemoveItem.RemoveListener(playerController.RemoveListItem);
+            EventService.Instance.SetUIOpen.RemoveListener(playerController.SetUIOpen);
+        }
+
         void Start()
         {
             EventService.Instance.OnRemoveItem.AddListener(playerController.RemoveListItem);
+            EventService.Instance.SetUIOpen.AddListener(playerController.SetUIOpen);
             ResetCameraPosition();
         }
 
@@ -72,20 +79,6 @@ namespace HorrorGame.Player
             {
                 EventService.Instance.SetSuggestionText.InvokeEvent("Press E to interact");
             }
-        }
-
-        void OnTriggerStay(Collider other)
-        {
-            if (other.TryGetComponent(out interactable) && playerController.IsInteracted)
-            {
-                interactable.Interact();
-                playerController.IsInteracted = false;
-            }
-        }
-
-        void OnDisable()
-        {
-            EventService.Instance.OnRemoveItem.RemoveListener(playerController.RemoveListItem);
         }
     }
 }

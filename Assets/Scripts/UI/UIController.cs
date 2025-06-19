@@ -12,6 +12,8 @@ namespace HorrorGame.UI
         [SerializeField] private GameObject suggestionsObject;
         [SerializeField] private GameObject notesObject;
         [SerializeField] private GameObject startMenu;
+        [SerializeField] private GameObject interaction;
+        [SerializeField] private GameObject GameEnd;
 
         void OnEnable()
         {
@@ -19,6 +21,7 @@ namespace HorrorGame.UI
             EventService.Instance.SetNotesText.AddListener(NotesText);
             EventService.Instance.OpenNotesText.AddListener(OpenNotes);
             EventService.Instance.ShowMainMenu.AddListener(ShowStartMenu);
+            EventService.Instance.OnDoorOpen.AddListener(ShowGameEnd);
         }
 
         void OnDisable()
@@ -27,6 +30,7 @@ namespace HorrorGame.UI
             EventService.Instance.SetNotesText.RemoveListener(NotesText);
             EventService.Instance.OpenNotesText.RemoveListener(OpenNotes);
             EventService.Instance.ShowMainMenu.RemoveListener(ShowStartMenu);
+            EventService.Instance.OnDoorOpen.RemoveListener(ShowGameEnd);
         }
 
         private void ShowStartMenu()
@@ -49,18 +53,38 @@ namespace HorrorGame.UI
         private void OpenNotes()
         {
             notesObject.SetActive(true);
-            StartCoroutine(HideText(notesObject));
+            DisableInteractionUI();
+            EventService.Instance.SetUIOpen.InvokeEvent(true);
+        }
+
+        private void StartInteractionUI()
+        {
+            interaction.SetActive(true);
+        }
+
+        private void DisableInteractionUI()
+        {
+            interaction.SetActive(false);
+        }
+
+        private void ShowGameEnd()
+        {
+            GameEnd.SetActive(true);
+            EventService.Instance.SetUIOpen.InvokeEvent(true);
         }
 
         public void StartGameButton()
         {
             EventService.Instance.OnStartGame.InvokeEvent();
+            StartInteractionUI();
             startMenu.SetActive(false);
         }
 
         public void CloseNotes()
         {
             notesObject.SetActive(false);
+            StartInteractionUI();
+            EventService.Instance.SetUIOpen.InvokeEvent(false);
         }
 
         private IEnumerator HideText(GameObject gameObject)

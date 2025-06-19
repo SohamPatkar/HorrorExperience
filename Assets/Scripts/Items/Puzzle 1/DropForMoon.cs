@@ -16,7 +16,7 @@ namespace HorrorGame.Items
 
         public void Interact()
         {
-            if (GameService.Instance.playerService.GetPlayerItemList().Contains(moonItem))
+            if (GameService.Instance.PlayerService.GetPlayerItemList().Contains(moonItem))
             {
                 moon = moonItem.gameObject;
                 moon.SetActive(true);
@@ -35,6 +35,7 @@ namespace HorrorGame.Items
             moon.transform.SetParent(transform, true);
             moon.transform.localPosition = Vector3.zero;
             moon.transform.localPosition = Vector3.zero;
+            moon.GetComponent<BoxCollider>().enabled = false;
         }
 
         private void ChangeMaterialEmission()

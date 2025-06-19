@@ -14,8 +14,7 @@ namespace HorrorGame.Main
         [SerializeField] private PlayerView playerView;
         [SerializeField] private GameObject playerSpawnPosition;
 
-
-        public PlayerService playerService { get; private set; }
+        public PlayerService PlayerService { get; private set; }
         public GameManager GameManager { get { return gameManager; } }
         public UIController UIController { get { return uIController; } }
 
@@ -24,15 +23,20 @@ namespace HorrorGame.Main
             EventService.Instance.OnStartGame.AddListener(CreatePlayer);
         }
 
+
+        void OnDisable()
+        {
+            EventService.Instance.OnStartGame.RemoveListener(CreatePlayer);
+        }
+
         void Start()
         {
             EventService.Instance.ShowMainMenu.InvokeEvent();
         }
 
-
         private void CreatePlayer()
         {
-            playerService = new PlayerService(playerView, playerSpawnPosition);
+            PlayerService = new PlayerService(playerView, playerSpawnPosition);
             SetSuggestions();
         }
 

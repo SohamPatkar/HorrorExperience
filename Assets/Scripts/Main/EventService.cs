@@ -22,12 +22,35 @@ namespace HorrorGame.Main
         }
 
         public EventController<IInteractable> OnRemoveItem { get; private set; }
+        public EventController<string> SetSuggestionText { get; private set; }
+        public EventController<string> SetNotesText { get; private set; }
+        public EventController<bool> SetUIOpen { get; private set; }
+        public EventController<GameObject> SetNextTask { get; private set; }
+        public EventController OpenNotesText { get; private set; }
+        public EventController AddPuzzleCounter { get; private set; }
+        public EventController DimLights { get; private set; }
+        public EventController OnStartGame { get; private set; }
+        public EventController ShowMainMenu { get; private set; }
+        public EventController DeactivateGameObjects { get; private set; }
+        public EventController OnLastPuzzle { get; private set; }
+        public EventController OnDoorOpen { get; private set; }
 
         public EventService()
         {
             OnRemoveItem = new EventController<IInteractable>();
+            SetNotesText = new EventController<string>();
+            SetSuggestionText = new EventController<string>();
+            SetUIOpen = new EventController<bool>();
+            SetNextTask = new EventController<GameObject>();
+            OpenNotesText = new EventController();
+            AddPuzzleCounter = new EventController();
+            DimLights = new EventController();
+            OnStartGame = new EventController();
+            ShowMainMenu = new EventController();
+            DeactivateGameObjects = new EventController();
+            OnLastPuzzle = new EventController();
+            OnDoorOpen = new EventController();
         }
-
     }
 }
 

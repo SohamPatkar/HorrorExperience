@@ -13,5 +13,4 @@ MonoBehaviour:
   m_Name: Player
   m_EditorClassIdentifier: 
   Name: Sameer
-  Items: 0
   MovementSpeed: 2

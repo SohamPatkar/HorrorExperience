@@ -9,36 +9,40 @@ namespace HorrorGame.Main
 {
     public class GameService : GenericMonoSingleton<GameService>
     {
-        [SerializeField] private UIService uIService;
+        [SerializeField] private UIController uIController;
+        [SerializeField] private GameManager gameManager;
         [SerializeField] private PlayerView playerView;
         [SerializeField] private GameObject playerSpawnPosition;
-        [SerializeField] private List<GameObject> puzzles;
 
-        public PlayerService playerService { get; private set; }
-        public UIService UIService { get { return uIService; } }
+        public PlayerService PlayerService { get; private set; }
+        public GameManager GameManager { get { return gameManager; } }
+        public UIController UIController { get { return uIController; } }
 
-        void Start()
+        void OnEnable()
         {
-            playerService = new PlayerService(playerView, playerSpawnPosition);
-
-            EventService.Instance.SetSuggestionText.InvokeEvent("Look for Notes");
-            EventService.Instance.SetNextTask.AddListener(StartPuzzle);
+            EventService.Instance.OnStartGame.AddListener(CreatePlayer);
         }
 
-        private void StartPuzzle(GameObject puzzle)
-        {
-            foreach (GameObject puzzleItem in puzzles)
-            {
-                if (puzzleItem.name == puzzle.name)
-                {
-                    puzzle.SetActive(true);
-                }
-            }
-        }
 
         void OnDisable()
         {
-            EventService.Instance.SetNextTask.RemoveListener(StartPuzzle);
+            EventService.Instance.OnStartGame.RemoveListener(CreatePlayer);
+        }
+
+        void Start()
+        {
+            EventService.Instance.ShowMainMenu.InvokeEvent();
+        }
+
+        private void CreatePlayer()
+        {
+            PlayerService = new PlayerService(playerView, playerSpawnPosition);
+            SetSuggestions();
+        }
+
+        private void SetSuggestions()
+        {
+            EventService.Instance.SetSuggestionText.InvokeEvent("Look for Notes");
         }
     }
 }

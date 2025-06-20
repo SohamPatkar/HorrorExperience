@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using HorrorGame.Items;
 using HorrorGame.Main;
+using HorrorGame.Sounds;
 using UnityEngine;
 
 namespace HorrorGame.Items
@@ -15,7 +16,7 @@ namespace HorrorGame.Items
 
         public void Interact()
         {
-            if (GameService.Instance.playerService.GetPlayerItemList().Contains(moonItem))
+            if (GameService.Instance.PlayerService.GetPlayerItemList().Contains(moonItem))
             {
                 moon = moonItem.gameObject;
                 moon.SetActive(true);
@@ -24,6 +25,8 @@ namespace HorrorGame.Items
 
                 EventService.Instance.OnRemoveItem.InvokeEvent(moonItem);
                 EventService.Instance.SetNextTask.InvokeEvent(puzzleTwo);
+                SoundManager.Instance.PlaySfx(SoundType.Changed);
+                EventService.Instance.DimLights.InvokeEvent();
             }
         }
 
@@ -32,12 +35,13 @@ namespace HorrorGame.Items
             moon.transform.SetParent(transform, true);
             moon.transform.localPosition = Vector3.zero;
             moon.transform.localPosition = Vector3.zero;
+            moon.GetComponent<BoxCollider>().enabled = false;
         }
 
         private void ChangeMaterialEmission()
         {
             Material mat = moon.gameObject.GetComponent<Renderer>().material;
-            Color baseColor = Color.yellow;
+            Color baseColor = Color.white;
             Color finalColor = baseColor * Mathf.LinearToGammaSpace(50);
             mat.SetColor("_EmissionColor", finalColor);
         }

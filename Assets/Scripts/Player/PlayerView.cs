@@ -10,24 +10,47 @@ namespace HorrorGame.Player
 {
     public class PlayerView : MonoBehaviour
     {
-        [SerializeField] private Camera camera;
         [SerializeField] private PlayerScriptableObject playerScriptableObject;
+
+        private Camera camera;
 
         private IInteractable interactable;
 
         private PlayerController playerController;
 
+        void Awake()
+        {
+            camera = GameObject.Find("Camera").GetComponent<Camera>();
+        }
+
+        void OnDisable()
+        {
+            EventService.Instance.OnRemoveItem.RemoveListener(playerController.RemoveListItem);
+            EventService.Instance.SetUIOpen.RemoveListener(playerController.SetUIOpen);
+        }
+
         void Start()
         {
             EventService.Instance.OnRemoveItem.AddListener(playerController.RemoveListItem);
+            EventService.Instance.SetUIOpen.AddListener(playerController.SetUIOpen);
+            ResetCameraPosition();
         }
 
         void Update()
         {
-            playerController.CameraMovement();
             playerController.PlayerMovement();
             playerController.Interact();
             playerController.GetCount();
+        }
+
+        void LateUpdate()
+        {
+            playerController.CameraMovement();
+        }
+
+        private void ResetCameraPosition()
+        {
+            camera.transform.position = transform.position;
         }
 
         public void SetController(PlayerController playerController)
@@ -54,22 +77,8 @@ namespace HorrorGame.Player
         {
             if (other.TryGetComponent(out interactable))
             {
-                EventService.Instance.SetSuggestionText.InvokeEvent("Interact! press E");
+                EventService.Instance.SetSuggestionText.InvokeEvent("Press E to interact");
             }
-        }
-
-        void OnTriggerStay(Collider other)
-        {
-            if (other.TryGetComponent(out interactable) && playerController.IsInteracted)
-            {
-                interactable.Interact();
-                playerController.IsInteracted = false;
-            }
-        }
-
-        void OnDisable()
-        {
-            EventService.Instance.OnRemoveItem.RemoveListener(playerController.RemoveListItem);
         }
     }
 }

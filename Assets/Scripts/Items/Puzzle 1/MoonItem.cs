@@ -10,7 +10,7 @@ namespace HorrorGame.Items
     {
         public void Interact()
         {
-            GameService.Instance.playerService.GetPlayerItemList()?.Add(this);
+            GameService.Instance.PlayerService.GetPlayerItemList()?.Add(this);
             gameObject.SetActive(false);
         }
     }

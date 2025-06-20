@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using HorrorGame.Items;
 using HorrorGame.SO;
-using Unity.Mathematics;
-using Unity.VisualScripting;
+using HorrorGame.Main;
 using UnityEngine;
 
 namespace HorrorGame.Player
@@ -19,25 +18,27 @@ namespace HorrorGame.Player
         private Camera playerCam;
         private Transform playerTransform;
         private float movementSpeed;
-        public bool IsInteracted;
+        private bool isUIOpen = false;
+        private float interactDistance;
 
         public PlayerController(PlayerScriptableObject playerScriptableObject, PlayerView playerView, Vector3 spawnPos)
         {
             this.playerScriptableObject = playerScriptableObject;
-            this.playerView = Object.Instantiate(playerView.gameObject, spawnPos, quaternion.identity).GetComponent<PlayerView>();
+            this.playerView = Object.Instantiate(playerView.gameObject).GetComponent<PlayerView>();
+            this.playerView.gameObject.transform.position = spawnPos;
 
             Initialize();
         }
 
         private void Initialize()
         {
-            mouseXSens = 250f;
-            mouseYSens = 250f;
+            mouseXSens = 150;
+            mouseYSens = 150;
             playerView.SetController(this);
             playerCam = playerView.GetCamera();
             playerTransform = playerView.GetPlayerTransform();
+            interactDistance = 3f;
             movementSpeed = playerScriptableObject.MovementSpeed;
-            IsInteracted = false;
         }
 
         public void PlayerMovement()
@@ -63,27 +64,53 @@ namespace HorrorGame.Player
 
         public void CameraMovement()
         {
-            Cursor.lockState = CursorLockMode.Locked;
+            if (!isUIOpen)
+            {
+                Debug.Log(isUIOpen);
 
-            float mouseXRotation = Input.GetAxisRaw("Mouse X") * Time.deltaTime * mouseXSens;
-            float mouseYRotation = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * mouseYSens;
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
 
-            mouseX -= mouseYRotation;
-            mouseY += mouseXRotation;
+                float mouseXRotation = Input.GetAxisRaw("Mouse X") * Time.deltaTime * mouseXSens;
+                float mouseYRotation = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * mouseYSens;
 
-            mouseX = Mathf.Clamp(mouseX, -90f, 90f);
+                mouseX -= mouseYRotation;
+                mouseY += mouseXRotation;
 
-            playerCam.transform.position = new Vector3(playerTransform.position.x, playerCam.transform.position.y, playerTransform.position.z);
+                mouseX = Mathf.Clamp(mouseX, -90f, 90f);
 
-            playerCam.transform.rotation = Quaternion.Euler(mouseX, mouseY, 0);
-            playerTransform.rotation = Quaternion.Euler(0, mouseY, 0);
+                playerCam.transform.position = new Vector3(playerTransform.position.x, playerCam.transform.position.y, playerTransform.position.z);
+                playerCam.transform.rotation = Quaternion.Euler(mouseX, mouseY, 0);
+                playerTransform.rotation = Quaternion.Euler(0, mouseY, 0);
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }
+        }
+
+        public void SetUIOpen(bool value)
+        {
+            isUIOpen = value;
         }
 
         public void Interact()
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (!isUIOpen)
             {
-                IsInteracted = true;
+                Ray ray = new Ray(playerCam.transform.position, playerCam.transform.forward);
+
+                if (Physics.Raycast(ray, out RaycastHit hit, interactDistance))
+                {
+                    if (hit.collider.TryGetComponent<IInteractable>(out var interactable))
+                    {
+                        if (Input.GetKeyDown(KeyCode.E))
+                        {
+                            interactable.Interact();
+                        }
+                    }
+                }
             }
         }
 

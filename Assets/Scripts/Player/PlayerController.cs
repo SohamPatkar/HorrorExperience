@@ -64,10 +64,8 @@ namespace HorrorGame.Player
 
         public void CameraMovement()
         {
-            if (!isUIOpen)
+            if (GameService.Instance.GameManager.GetGameState() == GameState.Gameplay)
             {
-                Debug.Log(isUIOpen);
-
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
 
@@ -90,14 +88,9 @@ namespace HorrorGame.Player
             }
         }
 
-        public void SetUIOpen(bool value)
-        {
-            isUIOpen = value;
-        }
-
         public void Interact()
         {
-            if (!isUIOpen)
+            if (GameService.Instance.GameManager.GetGameState() == GameState.Gameplay)
             {
                 Ray ray = new Ray(playerCam.transform.position, playerCam.transform.forward);
 

@@ -38,6 +38,7 @@ namespace HorrorGame.Main
         {
             PlayerService = new PlayerService(playerView, playerSpawnPosition);
             SetSuggestions();
+            EventService.Instance.OnStateChange.InvokeEvent(GameState.Gameplay);
         }
 
         private void SetSuggestions()

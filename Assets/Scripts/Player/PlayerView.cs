@@ -71,13 +71,13 @@ namespace HorrorGame.Player
             return transform;
         }
 
-        void OnTriggerEnter(Collider other)
-        {
-            if (other.TryGetComponent(out interactable))
-            {
-                EventService.Instance.SetSuggestionText.InvokeEvent("Press E to interact");
-            }
-        }
+        // void OnTriggerEnter(Collider other)
+        // {
+        //     if (other.TryGetComponent(out interactable))
+        //     {
+
+        //     }
+        // }
     }
 }
 

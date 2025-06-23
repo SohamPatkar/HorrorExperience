@@ -98,11 +98,17 @@ namespace HorrorGame.Player
                 {
                     if (hit.collider.TryGetComponent<IInteractable>(out var interactable))
                     {
+                        EventService.Instance.SetSuggestionText.InvokeEvent("Press E to interact");
+
                         if (Input.GetKeyDown(KeyCode.E))
                         {
                             interactable.Interact();
                         }
                     }
+                }
+                else
+                {
+                    EventService.Instance.OnNotInteractable.InvokeEvent();
                 }
             }
         }

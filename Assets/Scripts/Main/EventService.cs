@@ -34,6 +34,7 @@ namespace HorrorGame.Main
         public EventController DeactivateGameObjects { get; private set; }
         public EventController OnLastPuzzle { get; private set; }
         public EventController OnDoorOpen { get; private set; }
+        public EventController OnNotInteractable { get; private set; }
 
         public EventService()
         {
@@ -50,6 +51,7 @@ namespace HorrorGame.Main
             DeactivateGameObjects = new EventController();
             OnLastPuzzle = new EventController();
             OnDoorOpen = new EventController();
+            OnNotInteractable = new EventController();
         }
     }
 }

@@ -22,6 +22,7 @@ namespace HorrorGame.UI
             EventService.Instance.OpenNotesText.AddListener(OpenNotes);
             EventService.Instance.ShowMainMenu.AddListener(ShowStartMenu);
             EventService.Instance.OnDoorOpen.AddListener(ShowGameEnd);
+            EventService.Instance.OnNotInteractable.AddListener(DisableText);
         }
 
         void OnDisable()
@@ -31,6 +32,7 @@ namespace HorrorGame.UI
             EventService.Instance.OpenNotesText.RemoveListener(OpenNotes);
             EventService.Instance.ShowMainMenu.RemoveListener(ShowStartMenu);
             EventService.Instance.OnDoorOpen.RemoveListener(ShowGameEnd);
+            EventService.Instance.OnNotInteractable.RemoveListener(DisableText);
         }
 
         private void ShowStartMenu()
@@ -48,7 +50,11 @@ namespace HorrorGame.UI
         {
             suggestionsObject.SetActive(true);
             suggestionText.text = suggestion;
-            StartCoroutine(HideText(suggestionsObject));
+        }
+
+        private void DisableText()
+        {
+            suggestionsObject.SetActive(false);
         }
 
         private void NotesText(string note)

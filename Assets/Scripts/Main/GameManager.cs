@@ -4,6 +4,12 @@ using UnityEngine;
 
 namespace HorrorGame.Main
 {
+    public enum GameState
+    {
+        Gameplay,
+        UI
+    }
+
     public class GameManager : MonoBehaviour
     {
         [Header("Puzzles")]
@@ -18,12 +24,15 @@ namespace HorrorGame.Main
         [Header("End Event")]
         [SerializeField] private List<Light> endGame;
 
+        private GameState currentGameState;
+
         private void OnEnable()
         {
             EventService.Instance.SetNextTask.AddListener(StartPuzzle);
             EventService.Instance.DimLights.AddListener(TurnOffLightsPuzzleOne);
             EventService.Instance.DeactivateGameObjects.AddListener(DeactivateGameObjects);
             EventService.Instance.OnLastPuzzle.AddListener(LightsOn);
+            EventService.Instance.OnStateChange.AddListener(SetGameState);
         }
 
         private void ODisable()
@@ -32,6 +41,7 @@ namespace HorrorGame.Main
             EventService.Instance.DimLights.RemoveListener(TurnOffLightsPuzzleOne);
             EventService.Instance.DeactivateGameObjects.RemoveListener(DeactivateGameObjects);
             EventService.Instance.OnLastPuzzle.RemoveListener(LightsOn);
+            EventService.Instance.OnStateChange.RemoveListener(SetGameState);
         }
 
         private void StartPuzzle(GameObject puzzle)
@@ -43,6 +53,16 @@ namespace HorrorGame.Main
                     puzzle.SetActive(true);
                 }
             }
+        }
+
+        private void SetGameState(GameState state)
+        {
+            currentGameState = state;
+        }
+
+        public GameState GetGameState()
+        {
+            return currentGameState;
         }
 
         private void TurnOffLightsPuzzleOne()

@@ -17,32 +17,44 @@ namespace HorrorGame.UI
 
         void OnEnable()
         {
-            EventService.Instance.SetSuggestionText.AddListener(ShowSuggestionText);
+            EventService.Instance.SetSuggestionText.AddListener(SetSuggestionText);
             EventService.Instance.SetNotesText.AddListener(NotesText);
             EventService.Instance.OpenNotesText.AddListener(OpenNotes);
             EventService.Instance.ShowMainMenu.AddListener(ShowStartMenu);
             EventService.Instance.OnDoorOpen.AddListener(ShowGameEnd);
+            EventService.Instance.OnNotInteractable.AddListener(DisableText);
         }
 
         void OnDisable()
         {
-            EventService.Instance.SetSuggestionText.RemoveListener(ShowSuggestionText);
+            EventService.Instance.SetSuggestionText.RemoveListener(SetSuggestionText);
             EventService.Instance.SetNotesText.RemoveListener(NotesText);
             EventService.Instance.OpenNotesText.RemoveListener(OpenNotes);
             EventService.Instance.ShowMainMenu.RemoveListener(ShowStartMenu);
             EventService.Instance.OnDoorOpen.RemoveListener(ShowGameEnd);
+            EventService.Instance.OnNotInteractable.RemoveListener(DisableText);
         }
 
         private void ShowStartMenu()
         {
+            SetUIState();
             startMenu.SetActive(true);
         }
 
-        private void ShowSuggestionText(string suggestion)
+        private void SetUIState()
+        {
+            EventService.Instance.OnStateChange.InvokeEvent(GameState.UI);
+        }
+
+        private void SetSuggestionText(string suggestion)
         {
             suggestionsObject.SetActive(true);
             suggestionText.text = suggestion;
-            StartCoroutine(HideText(suggestionsObject));
+        }
+
+        private void DisableText()
+        {
+            suggestionsObject.SetActive(false);
         }
 
         private void NotesText(string note)
@@ -52,10 +64,10 @@ namespace HorrorGame.UI
 
         private void OpenNotes()
         {
+            SetUIState();
             notesObject.SetActive(true);
             suggestionsObject.SetActive(false);
             DisableInteractionUI();
-            EventService.Instance.SetUIOpen.InvokeEvent(true);
         }
 
         private void StartInteractionUI()
@@ -70,8 +82,8 @@ namespace HorrorGame.UI
 
         private void ShowGameEnd()
         {
+            SetUIState();
             GameEnd.SetActive(true);
-            EventService.Instance.SetUIOpen.InvokeEvent(true);
         }
 
         public void StartGameButton()
@@ -84,8 +96,8 @@ namespace HorrorGame.UI
         public void CloseNotes()
         {
             notesObject.SetActive(false);
+            EventService.Instance.OnStateChange.InvokeEvent(GameState.Gameplay);
             StartInteractionUI();
-            EventService.Instance.SetUIOpen.InvokeEvent(false);
         }
 
         private IEnumerator HideText(GameObject gameObject)

@@ -26,13 +26,11 @@ namespace HorrorGame.Player
         void OnDisable()
         {
             EventService.Instance.OnRemoveItem.RemoveListener(playerController.RemoveListItem);
-            EventService.Instance.SetUIOpen.RemoveListener(playerController.SetUIOpen);
         }
 
         void Start()
         {
             EventService.Instance.OnRemoveItem.AddListener(playerController.RemoveListItem);
-            EventService.Instance.SetUIOpen.AddListener(playerController.SetUIOpen);
             ResetCameraPosition();
         }
 
@@ -73,13 +71,13 @@ namespace HorrorGame.Player
             return transform;
         }
 
-        void OnTriggerEnter(Collider other)
-        {
-            if (other.TryGetComponent(out interactable))
-            {
-                EventService.Instance.SetSuggestionText.InvokeEvent("Press E to interact");
-            }
-        }
+        // void OnTriggerEnter(Collider other)
+        // {
+        //     if (other.TryGetComponent(out interactable))
+        //     {
+
+        //     }
+        // }
     }
 }
 

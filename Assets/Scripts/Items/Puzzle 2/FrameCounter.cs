@@ -11,6 +11,7 @@ namespace HorrorGame.Items
         [SerializeField] private GameObject puzzleThree;
         [SerializeField] private GameObject windowBlock;
         private int framesTurnedCount = 0;
+        private int totalFrames = 3;
 
         private void Start()
         {
@@ -21,7 +22,7 @@ namespace HorrorGame.Items
         {
             framesTurnedCount += 1;
 
-            if (framesTurnedCount == 3)
+            if (framesTurnedCount == totalFrames)
             {
                 windowBlock.SetActive(true);
                 SoundManager.Instance.PlaySfx(SoundType.Changed);

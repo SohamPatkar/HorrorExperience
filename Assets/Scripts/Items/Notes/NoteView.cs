@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using HorrorGame.Main;
 using UnityEngine;
 
@@ -11,6 +9,11 @@ namespace HorrorGame.Items
 
         public void Interact()
         {
+            if (noteData.NoteID == "#2")
+            {
+                EventService.Instance.OnNotePick.InvokeEvent();
+            }
+
             EventService.Instance.OpenNotesText.InvokeEvent();
             EventService.Instance.SetNotesText.InvokeEvent(noteData.NoteContents);
         }

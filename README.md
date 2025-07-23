@@ -4,6 +4,8 @@
 
 Developed a modular horror game using an event-driven architecture to enhance scalability and maintainability.
 
+Used global Volumes for post processing.
+
 Implemented MVC pattern for the Player system, separating logic (Controller), visuals (View), and data (Model) for clean code structure and easy updates.
 
 Utilized the Observer pattern to trigger and manage in-game horror events and dynamic UI updates, ensuring real-time responsiveness to gameplay changes.

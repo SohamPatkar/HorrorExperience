@@ -20,7 +20,13 @@ namespace HorrorGame.Player
 
         void Awake()
         {
+            Debug.Log("Awake");
             camera = GameObject.Find("Camera").GetComponent<Camera>();
+        }
+
+        void OnEnable()
+        {
+            Debug.Log("Enable");
         }
 
         void OnDisable()
@@ -30,6 +36,7 @@ namespace HorrorGame.Player
 
         void Start()
         {
+            Debug.Log("Start");
             EventService.Instance.OnRemoveItem.AddListener(playerController.RemoveListItem);
             ResetCameraPosition();
         }
@@ -70,14 +77,6 @@ namespace HorrorGame.Player
         {
             return transform;
         }
-
-        // void OnTriggerEnter(Collider other)
-        // {
-        //     if (other.TryGetComponent(out interactable))
-        //     {
-
-        //     }
-        // }
     }
 }
 

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using HorrorGame.Items;
 using UnityEngine;
 
@@ -35,6 +33,10 @@ namespace HorrorGame.Main
         public EventController OnLastPuzzle { get; private set; }
         public EventController OnDoorOpen { get; private set; }
         public EventController OnNotInteractable { get; private set; }
+        public EventController OnNotePick { get; private set; }
+        public EventController OnFirstPuzzle { get; private set; }
+        public EventController OnSecondPuzzle { get; private set; }
+        public EventController OnThirdPuzzle { get; private set; }
 
         public EventService()
         {
@@ -52,6 +54,10 @@ namespace HorrorGame.Main
             OnLastPuzzle = new EventController();
             OnDoorOpen = new EventController();
             OnNotInteractable = new EventController();
+            OnNotePick = new EventController();
+            OnFirstPuzzle = new EventController();
+            OnSecondPuzzle = new EventController();
+            OnThirdPuzzle = new EventController();
         }
     }
 }

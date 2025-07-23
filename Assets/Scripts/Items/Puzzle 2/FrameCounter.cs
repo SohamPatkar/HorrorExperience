@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using HorrorGame.Main;
 using HorrorGame.Sounds;
 using UnityEngine;
@@ -10,8 +8,19 @@ namespace HorrorGame.Items
     {
         [SerializeField] private GameObject puzzleThree;
         [SerializeField] private GameObject windowBlock;
+        [SerializeField] private GameObject[] frames;
         private int framesTurnedCount = 0;
         private int totalFrames = 3;
+
+        void OnEnable()
+        {
+            EventService.Instance.OnNotePick.AddListener(ActivateFrames);
+        }
+
+        void OnDisable()
+        {
+            EventService.Instance.OnNotePick.RemoveListener(ActivateFrames);
+        }
 
         private void Start()
         {
@@ -24,15 +33,24 @@ namespace HorrorGame.Items
 
             if (framesTurnedCount == totalFrames)
             {
-                windowBlock.SetActive(true);
-                SoundManager.Instance.PlaySfx(SoundType.Changed);
-                EventService.Instance.SetNextTask.InvokeEvent(puzzleThree);
+                SecondPuzzleCompleted();
             }
         }
 
-        void OnDisable()
+        private void ActivateFrames()
         {
-            EventService.Instance.AddPuzzleCounter.RemoveListener(AddCount);
+            foreach (GameObject frame in frames)
+            {
+                frame.SetActive(true);
+            }
+        }
+
+        private void SecondPuzzleCompleted()
+        {
+            windowBlock.SetActive(true);
+            SoundManager.Instance.PlaySfx(SoundType.Changed);
+            EventService.Instance.SetNextTask.InvokeEvent(puzzleThree);
+            EventService.Instance.OnSecondPuzzle.InvokeEvent();
         }
     }
 }

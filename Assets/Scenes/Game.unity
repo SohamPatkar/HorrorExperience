@@ -400,6 +400,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   puzzleThree: {fileID: 570614331}
   windowBlock: {fileID: 2046510126}
+  frames:
+  - {fileID: 438582032}
+  - {fileID: 294717571}
+  - {fileID: 436569085}
 --- !u!1 &162374087
 GameObject:
   m_ObjectHideFlags: 0
@@ -1475,6 +1479,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 287115035}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &294717571 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 203412255192531003, guid: 659550e9584eacb498809bb40dfb628b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1114236876}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &300590851
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2097,6 +2107,18 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 1
+--- !u!1 &436569085 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 203412255192531003, guid: 659550e9584eacb498809bb40dfb628b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1075349610}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &438582032 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 203412255192531003, guid: 659550e9584eacb498809bb40dfb628b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1915511462}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &450072465
 GameObject:
   m_ObjectHideFlags: 0
@@ -4296,7 +4318,7 @@ GameObject:
   m_Component:
   - component: {fileID: 916325502}
   m_Layer: 0
-  m_Name: SpawnPos
+  m_Name: SpawnPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4794,6 +4816,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Frame
       objectReference: {fileID: 0}
+    - target: {fileID: 203412255192531003, guid: 659550e9584eacb498809bb40dfb628b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2424965579648048440, guid: 659550e9584eacb498809bb40dfb628b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5021,6 +5048,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Frame
+      objectReference: {fileID: 0}
+    - target: {fileID: 203412255192531003, guid: 659550e9584eacb498809bb40dfb628b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2424965579648048440, guid: 659550e9584eacb498809bb40dfb628b,
         type: 3}
@@ -6908,6 +6940,7 @@ MonoBehaviour:
   playerView: {fileID: 8949245813247440247, guid: b5c4a839877cd4b45a2d1c890de290f2,
     type: 3}
   playerSpawnPosition: {fileID: 916325501}
+  globalVolume: {fileID: 832575518}
 --- !u!1001 &1600316793
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8688,6 +8721,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Frame
+      objectReference: {fileID: 0}
+    - target: {fileID: 203412255192531003, guid: 659550e9584eacb498809bb40dfb628b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2424965579648048440, guid: 659550e9584eacb498809bb40dfb628b,
         type: 3}

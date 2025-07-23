@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -33,15 +32,21 @@ namespace HorrorGame.Main
             EventService.Instance.DeactivateGameObjects.AddListener(DeactivateGameObjects);
             EventService.Instance.OnLastPuzzle.AddListener(LightsOn);
             EventService.Instance.OnStateChange.AddListener(SetGameState);
+            EventService.Instance.OnFirstPuzzle.AddListener(FirstPuzzleDone);
+            EventService.Instance.OnSecondPuzzle.AddListener(SecondPuzzleDone);
+            EventService.Instance.OnThirdPuzzle.AddListener(ThirdPuzzleDone);
         }
 
-        private void ODisable()
+        private void OnDisable()
         {
             EventService.Instance.SetNextTask.RemoveListener(StartPuzzle);
             EventService.Instance.DimLights.RemoveListener(TurnOffLightsPuzzleOne);
             EventService.Instance.DeactivateGameObjects.RemoveListener(DeactivateGameObjects);
             EventService.Instance.OnLastPuzzle.RemoveListener(LightsOn);
             EventService.Instance.OnStateChange.RemoveListener(SetGameState);
+            EventService.Instance.OnFirstPuzzle.RemoveListener(FirstPuzzleDone);
+            EventService.Instance.OnSecondPuzzle.RemoveListener(SecondPuzzleDone);
+            EventService.Instance.OnThirdPuzzle.RemoveListener(ThirdPuzzleDone);
         }
 
         private void StartPuzzle(GameObject puzzle)
@@ -53,6 +58,21 @@ namespace HorrorGame.Main
                     puzzle.SetActive(true);
                 }
             }
+        }
+
+        private void FirstPuzzleDone()
+        {
+            GameService.Instance.SanitySystem.RemoveColorAdjustments();
+        }
+
+        private void SecondPuzzleDone()
+        {
+            GameService.Instance.SanitySystem.RemoveVignette();
+        }
+
+        private void ThirdPuzzleDone()
+        {
+            GameService.Instance.SanitySystem.RemoveDepthOfField();
         }
 
         private void SetGameState(GameState state)

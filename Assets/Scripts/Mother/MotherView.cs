@@ -24,18 +24,24 @@ namespace HorrorGame.Mother
             }
             else if (note != null)
             {
-                note.SetActive(true);
-                DeactivateGameobjects();
-                EventService.Instance.OnLastPuzzle.InvokeEvent();
-                SoundManager.Instance.PlayBackgroundMusic(SoundType.EndMusic);
-                SoundManager.Instance.PlaySfx(SoundType.Changed);
-                Destroy(gameObject, timer);
+                ThirdPuzzleComplete();
             }
         }
 
         private void DeactivateGameobjects()
         {
             EventService.Instance.DeactivateGameObjects.InvokeEvent();
+        }
+
+        private void ThirdPuzzleComplete()
+        {
+            note.SetActive(true);
+            DeactivateGameobjects();
+            EventService.Instance.OnLastPuzzle.InvokeEvent();
+            SoundManager.Instance.PlayBackgroundMusic(SoundType.EndMusic);
+            SoundManager.Instance.PlaySfx(SoundType.Changed);
+            EventService.Instance.OnThirdPuzzle.InvokeEvent();
+            Destroy(gameObject, timer);
         }
     }
 }

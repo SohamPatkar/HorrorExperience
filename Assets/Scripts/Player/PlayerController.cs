@@ -27,6 +27,8 @@ namespace HorrorGame.Player
             this.playerView = Object.Instantiate(playerView.gameObject).GetComponent<PlayerView>();
             this.playerView.gameObject.transform.position = spawnPos;
 
+            Debug.Log("Ctor");
+
             Initialize();
         }
 

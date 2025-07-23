@@ -23,10 +23,7 @@ namespace HorrorGame.Items
                 SendToDrop();
                 ChangeMaterialEmission();
 
-                EventService.Instance.OnRemoveItem.InvokeEvent(moonItem);
-                EventService.Instance.SetNextTask.InvokeEvent(puzzleTwo);
-                SoundManager.Instance.PlaySfx(SoundType.Changed);
-                EventService.Instance.DimLights.InvokeEvent();
+                FirstPuzzleCompleted();
             }
         }
 
@@ -44,6 +41,15 @@ namespace HorrorGame.Items
             Color baseColor = Color.white;
             Color finalColor = baseColor * Mathf.LinearToGammaSpace(50);
             mat.SetColor("_EmissionColor", finalColor);
+        }
+
+        private void FirstPuzzleCompleted()
+        {
+            EventService.Instance.OnRemoveItem.InvokeEvent(moonItem);
+            EventService.Instance.SetNextTask.InvokeEvent(puzzleTwo);
+            SoundManager.Instance.PlaySfx(SoundType.Changed);
+            EventService.Instance.DimLights.InvokeEvent();
+            EventService.Instance.OnFirstPuzzle.InvokeEvent();
         }
     }
 }
